@@ -48,9 +48,11 @@ export default function FolderView({
   FileExplorer = [],
   isCreateNewFolder = false,
   hanldeCreateNewFolder,
+  handleDeleteFolderClick,
 }) {
   const [folders, setFolders] = React.useState(["App"]);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [rightClickedFolder, setRightClickedFolder] = React.useState(null);
 
   const newFolderName = useRef("");
 
@@ -59,9 +61,6 @@ export default function FolderView({
     element.href = window.location.pathname + "/" + selectedFolder;
     element.click();
   };
-
-  const handleEditFolderClick = (selectedFolder) => {};
-  const handleDeleteFolderClick = (selectedFolder) => {};
 
   useEffect(() => {
     if (isCreateNewFolder) {
@@ -105,10 +104,11 @@ export default function FolderView({
     }
   }, [FileExplorer]);
 
-  const handleContextClick = (event) => {
+  const handleContextClick = (event, folder) => {
     event.preventDefault();
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
+    setRightClickedFolder(folder);
   };
 
   return (
@@ -121,7 +121,7 @@ export default function FolderView({
                 container
                 direction="column"
                 alignItems="center"
-                onContextMenu={handleContextClick}
+                onContextMenu={(e) => handleContextClick(e, folder)}
               >
                 <Grid onClick={() => handleFolderClick(folder)}>
                   <FolderIcon style={{ color: "#FFE9A2", fontSize: 100 }} />
@@ -134,13 +134,25 @@ export default function FolderView({
                   open={Boolean(anchorEl)}
                   onClose={(e) => setAnchorEl(false)}
                 >
-                  <StyledMenuItem onClick={handleEditFolderClick}>
+                  <StyledMenuItem
+                    onClick={(e) =>
+                      handleDeleteFolderClick(
+                        rightClickedFolder,
+                        setAnchorEl,
+                        1
+                      )
+                    }
+                  >
                     <ListItemIcon>
                       <SendIcon fontSize="small" />
                     </ListItemIcon>
                     <ListItemText primary="Edit Folder" />
                   </StyledMenuItem>
-                  <StyledMenuItem onClick={handleDeleteFolderClick}>
+                  <StyledMenuItem
+                    onClick={(e) =>
+                      handleDeleteFolderClick(rightClickedFolder, setAnchorEl)
+                    }
+                  >
                     <ListItemIcon>
                       <SendIcon fontSize="small" />
                     </ListItemIcon>

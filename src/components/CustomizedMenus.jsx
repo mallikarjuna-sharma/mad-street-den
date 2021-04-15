@@ -89,10 +89,6 @@ export default function CustomizedMenus() {
     handleClose();
   };
 
-  const handleModalClose = () => {
-    setCreateNewFolder(false);
-  };
-
   useEffect(() => {
     const data = getlocalStorage("folderJson");
     const signedInUser = getlocalStorage("signedInUser");
@@ -120,7 +116,6 @@ export default function CustomizedMenus() {
     let result = "";
     setFileExplorer((preFileExplorer) => {
       const preFileExplorerForUser = preFileExplorer[signedUser];
-      console.log(preFileExplorerForUser, "preFileExplorerForUser ");
 
       for (let i = 0; i < paths.length; ++i) {
         if (result) {
@@ -129,7 +124,6 @@ export default function CustomizedMenus() {
           result = preFileExplorerForUser[paths[i]];
         }
       }
-      console.log(result, "result");
       result = Object.assign(result, { [newFolderName]: {} });
 
       setlocalStorage("folderJson", {
@@ -144,6 +138,35 @@ export default function CustomizedMenus() {
     });
 
     setCreateNewFolder(false);
+  };
+
+  const handleDeleteFolderClick = (selectedFolder, setAnchorEl, type = 0) => {
+    const paths = getlUrlPaths();
+    let result = "";
+    setFileExplorer((preFileExplorer) => {
+      const preFileExplorerForUser = preFileExplorer[signedUser];
+
+      for (let i = 0; i < paths.length; ++i) {
+        if (result) {
+          result = result[paths[i]];
+        } else {
+          result = preFileExplorerForUser[paths[i]];
+        }
+      }
+      delete result[selectedFolder];
+      setlocalStorage("folderJson", {
+        ...preFileExplorer,
+        [signedUser]: preFileExplorerForUser,
+      });
+      setAnchorEl(null);
+
+      return {
+        ...preFileExplorer,
+        [signedUser]: preFileExplorerForUser,
+      };
+    });
+
+    if (type) setCreateNewFolder(true);
   };
 
   const Header = () => (
@@ -261,6 +284,7 @@ export default function CustomizedMenus() {
 
           <FolderView
             hanldeCreateNewFolder={hanldeCreateNewFolder}
+            handleDeleteFolderClick={handleDeleteFolderClick}
             isCreateNewFolder={createNewFolder}
             FileExplorer={
               (FileExplorer && { ...FileExplorer[signedUser] }) || []
