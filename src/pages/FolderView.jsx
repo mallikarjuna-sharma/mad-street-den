@@ -176,7 +176,15 @@ export default function FolderView({
           </Grid>
         )}
         {!folders.length && (
-          <Typography style={{ textAlign: "center" }}>
+          <Typography
+            style={{
+              textAlign: "center",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              textShadow: "0 1px 2px rgba(0, 0, 0, 0.6)",
+            }}
+          >
             Right Click to Create New Folder
           </Typography>
         )}

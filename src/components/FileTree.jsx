@@ -17,7 +17,7 @@ const FileTree = ({ FileExplorer = {} }) => {
         currentNode = currentNode[path];
 
         designNode.push(
-          <Grid item style={{ marginLeft: Pathindex * 20 }}>
+          <Grid item style={{ marginLeft: !Pathindex ? -15 : Pathindex * 20 }}>
             <Grid container direction="row">
               <FolderOpenIcon />
               <Typography>{path}</Typography>

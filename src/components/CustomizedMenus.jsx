@@ -59,28 +59,6 @@ function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
 
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStylesModel = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
 export default function CustomizedMenus() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -89,26 +67,17 @@ export default function CustomizedMenus() {
   const [FileExplorer, setFileExplorer] = React.useState();
   const [signedUser, setSignedInUser] = React.useState("");
   const [IsMaxView, setIsMaxView] = React.useState(false);
-  const Images = [
-    image1,
-    image2,
-    image3,
-    image4,
-    image5,
-    image6,
-    image7,
-    image8,
-  ];
-
-  const imageRefTimer = useRef(null);
-  const [CurrentImage, setCurrentImage] = React.useState(image1);
-
-  const classesModal = useStylesModel();
-  const [modalStyle] = React.useState(getModalStyle);
 
   const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("signedInUser");
+    let element = document.createElement("a");
+    element.href = "/SignIn";
+    element.click();
   };
 
   const handleClose = () => {
@@ -140,14 +109,6 @@ export default function CustomizedMenus() {
         setFileExplorer(data);
       }
     }
-
-    imageRefTimer.current = setInterval(() => {
-      setCurrentImage(Images[Math.floor(Math.random() * 8)]);
-    }, 20 * 1000);
-
-    return () => {
-      clearInterval(imageRefTimer.current);
-    };
   }, []);
 
   useEffect(() => {
@@ -199,7 +160,8 @@ export default function CustomizedMenus() {
       style={{
         height: "100%",
         width: "100%",
-        backgroundImage: "url(" + CurrentImage + ")",
+        zIndex: 1,
+        position: "absolute",
       }}
     >
       <Paper
@@ -236,7 +198,10 @@ export default function CustomizedMenus() {
             left: 1,
           }}
         >
-          <ArrowBackIcon className="cursorPointer" />
+          <ArrowBackIcon
+            onClick={(e) => window.history.back()}
+            className="cursorPointer"
+          />
         </Grid>
         <Grid
           item
@@ -246,7 +211,10 @@ export default function CustomizedMenus() {
             left: 40,
           }}
         >
-          <ArrowForwardIcon className="cursorPointer" />
+          <ArrowForwardIcon
+            onClick={(e) => window.history.forward()}
+            className="cursorPointer"
+          />
         </Grid>
 
         <Grid
@@ -257,7 +225,7 @@ export default function CustomizedMenus() {
             right: 1,
           }}
         >
-          <CloseIcon className="cursorPointer" />
+          <CloseIcon onClick={handleLogout} className="cursorPointer" />
         </Grid>
         <Grid
           item
