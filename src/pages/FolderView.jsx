@@ -1,4 +1,11 @@
-import { Grid, GridList, Input, Paper, Typography } from "@material-ui/core";
+import {
+  Grid,
+  GridList,
+  Input,
+  Paper,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import React, { useEffect, useRef } from "react";
 
 import Button from "@material-ui/core/Button";
@@ -12,6 +19,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import SendIcon from "@material-ui/icons/Send";
 import { getlUrlPaths } from "../utils";
 import { withStyles } from "@material-ui/core/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
@@ -122,8 +131,19 @@ export default function FolderView({
                 onContextMenu={(e) => handleContextClick(e, folder)}
               >
                 <Grid onClick={() => handleFolderClick(folder)}>
-                  <FolderIcon style={{ color: "#FFE9A2", fontSize: 100 }} />
-                  <Typography> {folder}</Typography>
+                  <Tooltip
+                    title={
+                      <span>
+                        <p>Click to Open</p>
+                        <p>Right Click to Edit</p>
+                      </span>
+                    }
+                  >
+                    <div>
+                      <FolderIcon style={{ color: "#FFE9A2", fontSize: 100 }} />
+                      <Typography> {folder}</Typography>
+                    </div>
+                  </Tooltip>
                 </Grid>
                 <StyledMenu
                   id="customized-menu"
@@ -142,7 +162,7 @@ export default function FolderView({
                     }
                   >
                     <ListItemIcon>
-                      <SendIcon fontSize="small" />
+                      <EditIcon fontSize="small" />
                     </ListItemIcon>
                     <ListItemText primary="Edit Folder" />
                   </StyledMenuItem>
@@ -152,7 +172,7 @@ export default function FolderView({
                     }
                   >
                     <ListItemIcon>
-                      <SendIcon fontSize="small" />
+                      <DeleteIcon fontSize="small" />
                     </ListItemIcon>
                     <ListItemText primary="Delete Folder" />
                   </StyledMenuItem>

@@ -1,4 +1,4 @@
-import { Grid, Paper, makeStyles } from "@material-ui/core";
+import { Grid, Paper, makeStyles, Tooltip } from "@material-ui/core";
 import React, { useEffect, useRef } from "react";
 import {
   getlUrlPaths,
@@ -53,7 +53,7 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     "&:focus": {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: "dodgerblue",
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.common.white,
       },
@@ -222,10 +222,12 @@ export default function CustomizedMenus() {
             left: 1,
           }}
         >
-          <ArrowBackIcon
-            onClick={(e) => window.history.back()}
-            className="cursorPointer"
-          />
+          <Tooltip title="Go to previous Folder">
+            <ArrowBackIcon
+              onClick={(e) => window.history.back()}
+              className="cursorPointer"
+            />
+          </Tooltip>
         </Grid>
         <Grid
           item
@@ -235,10 +237,12 @@ export default function CustomizedMenus() {
             left: 40,
           }}
         >
-          <ArrowForwardIcon
-            onClick={(e) => window.history.forward()}
-            className="cursorPointer"
-          />
+          <Tooltip title="Go to Next Folder">
+            <ArrowForwardIcon
+              onClick={(e) => window.history.forward()}
+              className="cursorPointer"
+            />
+          </Tooltip>
         </Grid>
 
         <Grid
@@ -249,7 +253,9 @@ export default function CustomizedMenus() {
             right: 1,
           }}
         >
-          <CloseIcon onClick={handleLogout} className="cursorPointer" />
+          <Tooltip title="Log out">
+            <CloseIcon onClick={handleLogout} className="cursorPointer" />
+          </Tooltip>
         </Grid>
         <Grid
           item
@@ -260,7 +266,9 @@ export default function CustomizedMenus() {
           }}
           onClick={(e) => setIsMaxView((preValue) => !preValue)}
         >
-          <LaunchIcon className="cursorPointer" />
+          <Tooltip title="Maximise">
+            <LaunchIcon className="cursorPointer" />
+          </Tooltip>
         </Grid>
         <Grid
           item
@@ -294,8 +302,11 @@ export default function CustomizedMenus() {
         </Grid>
 
         <StyledMenu
+          style={{
+            position: "absolute",
+            top: "-50%",
+          }}
           id="customized-menu"
-          anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}
