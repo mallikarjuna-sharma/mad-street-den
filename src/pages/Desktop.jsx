@@ -14,10 +14,21 @@ import image5 from "../assets/5.jpg";
 import image6 from "../assets/6.jpg";
 import image7 from "../assets/7.jpg";
 import image8 from "../assets/8.jpg";
+import { Redirect, useHistory } from "react-router-dom";
+import { getlocalStorage, getlUrlPaths, SIGNED_IN_USER } from "../utils";
 
 const Images = [image1, image2, image3, image4, image5, image6, image7, image8];
 
 export default function Desktop() {
+  const signed_in_user = getlocalStorage(SIGNED_IN_USER);
+  const paths = getlUrlPaths();
+
+  if (!signed_in_user) {
+    return <Redirect to="/SignUp" />;
+  } else if (!paths.includes("app")) {
+    return <Redirect to="/app" />;
+  }
+
   return (
     <Grid
       container

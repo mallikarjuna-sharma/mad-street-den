@@ -1,4 +1,9 @@
-import { getlocalStorage, setlocalStorage } from "../utils";
+import {
+  getlocalStorage,
+  setlocalStorage,
+  SIGNED_IN_USER,
+  SIGNED_UP_USERS,
+} from "../utils";
 
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
@@ -14,6 +19,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { Redirect } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -44,14 +50,14 @@ export default function SignIn() {
     e.preventDefault();
     console.log(signInData, "signInData");
 
-    const signedUpUsers = getlocalStorage("signedUpUsers");
+    const signedUpUsers = getlocalStorage(SIGNED_UP_USERS);
 
     // check any user added to storage
     if (signedUpUsers) {
       // user already signed IN
       if (signedUpUsers[signInData.username]) {
         console.log("signed in success");
-        setlocalStorage("signedInUser", signInData.username);
+        setlocalStorage(SIGNED_IN_USER, signInData.username);
         const ele = document.createElement("a");
         ele.href = "/app";
         ele.click();
@@ -69,6 +75,12 @@ export default function SignIn() {
       return preData;
     });
   };
+
+  const signed_in_user = getlocalStorage(SIGNED_IN_USER);
+
+  if (signed_in_user) {
+    return <Redirect to="/app" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">

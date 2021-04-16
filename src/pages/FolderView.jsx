@@ -66,7 +66,8 @@ export default function FolderView({
     if (isCreateNewFolder) {
       let input = document.getElementById("newfolderId");
 
-      // Execute a function when the user releases a key on the keyboard
+      document.getElementById("newfolderId").focus();
+
       input.addEventListener("keyup", function (event) {
         if (event.keyCode === 13) {
           event.preventDefault();
@@ -85,7 +86,6 @@ export default function FolderView({
     if (FileExplorer) {
       const paths = getlUrlPaths();
       let result = false;
-      console.log(paths, "paths");
 
       for (let i = 0; i < paths.length; ++i) {
         if (result) {
@@ -99,8 +99,6 @@ export default function FolderView({
       } else {
         setFolders([]);
       }
-
-      console.log(result);
     }
   }, [FileExplorer]);
 

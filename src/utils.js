@@ -9,3 +9,7 @@ export const getlocalStorage = (key) => {
 export const getlUrlPaths = () => {
   return decodeURI(window.location.pathname).split("/").slice(1);
 };
+
+export const SIGNED_IN_USER = "signedInUser";
+export const FOLDER_JSON = "folderJson";
+export const SIGNED_UP_USERS = "signedUpUsers";

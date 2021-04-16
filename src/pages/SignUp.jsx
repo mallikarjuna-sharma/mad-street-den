@@ -1,4 +1,9 @@
-import { getlocalStorage, setlocalStorage } from "../utils";
+import {
+  getlocalStorage,
+  setlocalStorage,
+  SIGNED_IN_USER,
+  SIGNED_UP_USERS,
+} from "../utils";
 
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
@@ -14,6 +19,8 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { useEffect } from "react";
+import { Redirect } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +51,7 @@ export default function SignUp() {
     e.preventDefault();
     console.log(signUpData, "signUpData");
 
-    const signedUpUsers = getlocalStorage("signedUpUsers");
+    const signedUpUsers = getlocalStorage(SIGNED_UP_USERS);
 
     // check any user added to storage
     if (signedUpUsers) {
@@ -56,7 +63,7 @@ export default function SignUp() {
           ...signedUpUsers,
           [signUpData.username]: [signUpData],
         };
-        setlocalStorage("signedUpUsers", addUser);
+        setlocalStorage(SIGNED_UP_USERS, addUser);
         const ele = document.getElementById("signin_anchor");
         ele.click();
       }
@@ -64,7 +71,7 @@ export default function SignUp() {
       const addUser = {
         [signUpData.username]: signUpData,
       };
-      setlocalStorage("signedUpUsers", addUser);
+      setlocalStorage(SIGNED_UP_USERS, addUser);
       const ele = document.getElementById("signin_anchor");
       ele.click();
     }
@@ -76,6 +83,12 @@ export default function SignUp() {
       return preData;
     });
   };
+
+  const signed_in_user = getlocalStorage(SIGNED_IN_USER);
+
+  if (signed_in_user) {
+    return <Redirect to="/app" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">

@@ -1,6 +1,12 @@
 import { Grid, Paper, makeStyles } from "@material-ui/core";
 import React, { useEffect, useRef } from "react";
-import { getlUrlPaths, getlocalStorage, setlocalStorage } from "../utils";
+import {
+  getlUrlPaths,
+  getlocalStorage,
+  setlocalStorage,
+  SIGNED_IN_USER,
+  FOLDER_JSON,
+} from "../utils";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
@@ -90,26 +96,21 @@ export default function CustomizedMenus() {
   };
 
   useEffect(() => {
-    const data = getlocalStorage("folderJson");
-    const signedInUser = getlocalStorage("signedInUser");
-    console.log(signedInUser, "signedInUser");
+    const data = getlocalStorage(FOLDER_JSON);
+    const signedInUser = getlocalStorage(SIGNED_IN_USER);
     setSignedInUser(signedInUser);
     if (!data) {
       setFileExplorer({ [signedInUser]: { app: {} } });
-      setlocalStorage("folderJson", { [signedInUser]: { app: {} } });
+      setlocalStorage(FOLDER_JSON, { [signedInUser]: { app: {} } });
     } else {
       if (!data[signedInUser]) {
-        setlocalStorage("folderJson", { ...data, [signedInUser]: { app: {} } });
+        setlocalStorage(FOLDER_JSON, { ...data, [signedInUser]: { app: {} } });
         setFileExplorer({ ...data, [signedInUser]: { app: {} } });
       } else {
         setFileExplorer(data);
       }
     }
   }, []);
-
-  useEffect(() => {
-    console.log(signedUser, "FileExplorer useEffect", FileExplorer);
-  }, [FileExplorer]);
 
   const hanldeCreateNewFolder = (newFolderName) => {
     const paths = getlUrlPaths();
@@ -126,7 +127,7 @@ export default function CustomizedMenus() {
       }
       result = Object.assign(result, { [newFolderName]: {} });
 
-      setlocalStorage("folderJson", {
+      setlocalStorage(FOLDER_JSON, {
         ...preFileExplorer,
         [signedUser]: preFileExplorerForUser,
       });
@@ -154,7 +155,7 @@ export default function CustomizedMenus() {
         }
       }
       delete result[selectedFolder];
-      setlocalStorage("folderJson", {
+      setlocalStorage(FOLDER_JSON, {
         ...preFileExplorer,
         [signedUser]: preFileExplorerForUser,
       });
