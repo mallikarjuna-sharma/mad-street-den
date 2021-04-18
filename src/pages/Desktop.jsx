@@ -1,10 +1,8 @@
 import { Grid, Paper } from "@material-ui/core";
 import React, { useEffect } from "react";
 
-import Container from "@material-ui/core/Container";
-import ContextMenu from "../components/CustomizedMenus";
-import CustomizedMenus from "../components/CustomizedMenus";
-import SlideShow from "../components/SlideShow/SlideShow";
+import CustomizedMenus from "../components/CustomizedMenus.jsx";
+import SlideShow from "../components/SlideShow/SlideShow.jsx";
 
 import image1 from "../assets/1.jpg";
 import image2 from "../assets/2.jpg";
@@ -35,7 +33,7 @@ export default function Desktop() {
       direction="column"
       style={{ height: "100%", width: "100%" }}
     >
-      {/* <SlideShow
+      <SlideShow
         autoPlay={true}
         activeSlideDuration={10 * 1000}
         interactionMode="swipe"
@@ -62,7 +60,6 @@ export default function Desktop() {
           </div>
         ))}
       </SlideShow>
-      */}
 
       <CustomizedMenus />
     </Grid>

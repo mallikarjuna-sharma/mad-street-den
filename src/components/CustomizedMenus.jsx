@@ -11,8 +11,8 @@ import {
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import CloseIcon from "@material-ui/icons/Close";
-import FileTree from "./FileTree";
-import FolderView from "../pages/FolderView";
+import FileTree from "./FileTree.jsx";
+import FolderView from "../pages/FolderView.jsx";
 import LaunchIcon from "@material-ui/icons/Launch";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
