@@ -35,7 +35,7 @@ export default function Desktop() {
       direction="column"
       style={{ height: "100%", width: "100%" }}
     >
-      <SlideShow
+      {/* <SlideShow
         autoPlay={true}
         activeSlideDuration={10 * 1000}
         interactionMode="swipe"
@@ -62,6 +62,8 @@ export default function Desktop() {
           </div>
         ))}
       </SlideShow>
+      */}
+
       <CustomizedMenus />
     </Grid>
   );
