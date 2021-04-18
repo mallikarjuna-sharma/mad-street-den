@@ -2,9 +2,9 @@ import "./App.css";
 
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-import Desktop from "./pages/Desktop.jsx";
-import SignIn from "./pages/SignIn.jsx";
-import SignUp from "./pages/SignUp.jsx";
+import Desktop from "./pages/Desktop";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import logo from "./logo.svg";
 
 function App() {
